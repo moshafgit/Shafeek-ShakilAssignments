@@ -1,0 +1,31 @@
+package com.junit.programs;
+
+import java.util.Scanner;
+
+public class FrequencyFinder {
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter the number");
+		int number = scanner.nextInt();
+
+		int[] tempArray = new int[10];
+		int rem = 0;
+
+		while (number > 0) {
+			rem = number % 10;
+			tempArray[rem]++;
+			number = number / 10;
+		}
+
+		// System.out.println(digitArray.length);
+
+		for (int i = 0; i < tempArray.length; i++) {
+			int digitCount = tempArray[i];
+			if (digitCount != 0) {
+				System.out.println(i + "\t" + digitCount);
+			}
+		}
+		scanner.close();
+	}
+}
