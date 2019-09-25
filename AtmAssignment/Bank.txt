@@ -1,0 +1,38 @@
+package com.ford.atmAssignment;
+
+public class Bank {
+	
+	int atmNumber;
+	double balanceAmount;
+	String bank;
+	
+	public Bank(int atmNumber,String bank,double balanceAmount) {
+		this.atmNumber=atmNumber;
+		this.balanceAmount=balanceAmount;
+		this.bank=bank;
+	}
+
+	public int getAtmNumber() {
+		return atmNumber;
+	}
+
+	public void setAtmNumber(int atmNumber) {
+		this.atmNumber = atmNumber;
+	}
+
+	public double getBalanceAmount() {
+		return balanceAmount;
+	}
+
+	public void setBalanceAmount(double balanceAmount) {
+		this.balanceAmount = balanceAmount;
+	}
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+}

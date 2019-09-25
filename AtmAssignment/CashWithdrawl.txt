@@ -1,0 +1,31 @@
+package com.ford.atmAssignment;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.List;
+
+public class CashWithdrawl {
+	public void updateAccountBalance(List<Bank> al,int cardNumber, double balance) throws Throwable {
+			
+			
+			
+			File file = new File("C:\\Users\\smoham53\\Documents\\ShafeekDocs\\Project\\Java-Shakil\\Assignments\\AtmAssignment\\UserInfo.txt");
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			
+			for (int i = 0; i < al.size(); i++) {
+				Bank temp = al.get(i);
+				if (temp.getAtmNumber()==cardNumber) {
+					temp.setBalanceAmount(temp.getBalanceAmount()-balance);
+					bw.write(temp.getAtmNumber()+","+temp.getBank()+","+temp.getBalanceAmount()+"\n");
+					System.out.println("Update balance in your a/c: "+temp.balanceAmount);
+				}else {
+					bw.write(temp.getAtmNumber()+","+temp.getBank()+","+temp.getBalanceAmount()+"\n");
+				}	
+			}
+			
+			
+			bw.close();
+			
+		}
+}

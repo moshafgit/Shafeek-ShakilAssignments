@@ -1,0 +1,101 @@
+package com.ford.atmAssignment;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Home {
+	
+	Bank b;
+	List<Bank> al = new ArrayList<Bank>();
+	int cardNumber;
+	double balance;
+	
+	public void main() throws InputMismatchException, Throwable {
+		
+		System.out.println("Welcome to ATM \nEnter your last 4 digits of the card number");
+		Scanner sc = new Scanner(System.in);
+		try {
+			cardNumber = sc.nextInt();
+			al = getDetailsFromFile();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+			
+		
+		b= validateCardNumber(al, cardNumber);
+		if (b!=null) {
+			System.out.println("atmCard: "+b.getAtmNumber()+ "\tBank: "+b.getBank()+"\t Balance: "+b.getBalanceAmount());
+			System.out.println("Enter \n1. Withdrow Money \n2.DepositCash \n3.Exit");
+			try {
+				double userVal=sc.nextInt();
+				if (userVal==1) {
+					System.out.println("Enter the withdrwal amount: ");
+					userVal = sc.nextInt();
+					CashWithdrawl cw= new CashWithdrawl();
+					cw.updateAccountBalance(al, cardNumber, userVal);
+				}else if(userVal==2) {
+					System.out.println("Enter the amount to deposit: ");
+					userVal = sc.nextInt();
+					CashDeposit cd= new CashDeposit();
+					cd.updateAccountBalance(al, cardNumber, userVal);
+				}else {
+					System.out.println("Thank you for using ATM service");
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("The atm card number provided is Invalid");
+		}
+		
+		
+	}
+
+	
+	public List<Bank> getDetailsFromFile() throws Throwable {
+		File file = new File("C:\\Users\\smoham53\\Documents\\ShafeekDocs\\Project\\Java-Shakil\\Assignments\\AtmAssignment\\UserInfo.txt");
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		
+		String st =br.readLine();
+		try {	
+			while (st!=null) {
+				String ar[]= st.split(",");
+			//	System.out.println("atmCard: "+ar[0]+ "\t Bank: "+ar[1]+"\t Balance: "+ar[2]);
+				b=new Bank(Integer.parseInt(ar[0]),ar[1],Double.parseDouble(ar[2]));
+				al.add(b);
+				st=br.readLine();
+			}
+			return al;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+			br.close();
+		}
+		return al;
+	}
+	
+	
+	public Bank validateCardNumber(List<Bank> al,int cardNumber) {
+		for (int i = 0; i < al.size(); i++) {
+			b= al.get(i);
+			if(b.getAtmNumber()== cardNumber) {
+				return b;
+			}
+		}
+		return null;
+	}
+}
